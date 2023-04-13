@@ -1,0 +1,6 @@
+# consult[https://gorm.io/docs/connecting_to_the_database.html]"
+dsn : "host=127.0.0.1 user=postgres password=xxxx dbname=db_example port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+# input mysql or postgres or sqlite or sqlserver. consult[https://gorm.io/docs/connecting_to_the_database.html]
+db  : "postgres"
+# enter the required data table or leave it blank.You can input : orders,users,goods
+tables  : "sys_department,sys_permission,sys_role,sys_user"

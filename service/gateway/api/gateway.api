@@ -1,0 +1,16 @@
+import "./user.api"
+
+type (
+	LoginReq {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	LoginReply {
+		Token string `json:"token"`
+	}
+)
+
+service gateway {
+	@handler login
+	post /api/login (LoginReq) returns (LoginReply)
+}
