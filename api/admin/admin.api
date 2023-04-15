@@ -1,0 +1,14 @@
+type (
+	LoginReq {
+		Username string `json:"username"`
+		Passwrod string `json:"password"`
+	}
+	LoginReply {
+		Token string `json:"token"`
+	}
+)
+
+service admin {
+	@handler login
+	get /api/login(LoginReq) returns (LoginReply)
+}

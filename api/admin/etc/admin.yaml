@@ -1,0 +1,15 @@
+Name: admin
+Host: 0.0.0.0
+Port: 8888
+UserRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: user.rpc
+CacheRedis:
+  - Host: 192.168.1.33:6379
+    Pass: fsdf.ds1.fdf8@5s-00
+    Type: node
+Auth:
+  AccessSecret: Sf1sfeqwr412335FD
+  AccessExpire: 86400
