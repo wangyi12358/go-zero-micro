@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"go-zero-micro/pkg/config"
-	"go-zero-micro/pkg/models"
+	"go-zero-micro/common/config"
+	"go-zero-micro/common/models"
 
 	zeroConfig "go-zero-micro/service/user/rpc/internal/config"
 	"go-zero-micro/service/user/rpc/internal/server"
