@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"go-zero-micro/service/user/model/sys_user_model"
 
 	"go-zero-micro/service/user/rpc/internal/svc"
@@ -11,27 +10,25 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type CheckUserLogic struct {
+type UserLoginLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewCheckUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CheckUserLogic {
-	return &CheckUserLogic{
+func NewUserLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserLoginLogic {
+	return &UserLoginLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *CheckUserLogic) CheckUser(in *user.CheckUserRequest) (*user.CheckUserResponse, error) {
+func (l *UserLoginLogic) UserLogin(in *user.CheckUserRequest) (*user.UserResponse, error) {
 	sysUser, err := sys_user_model.FindOneByLogin(in.Username, in.Password)
-	if err != nil {
-		fmt.Printf("check user error: %s", err.Error())
-		return &user.CheckUserResponse{Success: false}, nil
+	if err == nil {
+		return nil, err
 	}
-	return &user.CheckUserResponse{
-		Success: sysUser != nil,
-	}, nil
+
+	return sys_user_model.OfUserResponse(sysUser), nil
 }

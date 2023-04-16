@@ -31,3 +31,8 @@ func (s *UserServer) CheckUser(ctx context.Context, in *user.CheckUserRequest) (
 	l := logic.NewCheckUserLogic(ctx, s.svcCtx)
 	return l.CheckUser(in)
 }
+
+func (s *UserServer) UserLogin(ctx context.Context, in *user.CheckUserRequest) (*user.UserResponse, error) {
+	l := logic.NewUserLoginLogic(ctx, s.svcCtx)
+	return l.UserLogin(in)
+}

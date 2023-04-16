@@ -30,4 +30,5 @@ message CheckUserResponse {
 service User {
   rpc getUser(IdRequest) returns(UserResponse);
   rpc checkUser(CheckUserRequest) returns(CheckUserResponse);
+  rpc userLogin(CheckUserRequest) returns(UserResponse);
 }

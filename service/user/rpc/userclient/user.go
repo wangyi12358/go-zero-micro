@@ -21,6 +21,7 @@ type (
 	User interface {
 		GetUser(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*UserResponse, error)
 		CheckUser(ctx context.Context, in *CheckUserRequest, opts ...grpc.CallOption) (*CheckUserResponse, error)
+		UserLogin(ctx context.Context, in *CheckUserRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	}
 
 	defaultUser struct {
@@ -42,4 +43,9 @@ func (m *defaultUser) GetUser(ctx context.Context, in *IdRequest, opts ...grpc.C
 func (m *defaultUser) CheckUser(ctx context.Context, in *CheckUserRequest, opts ...grpc.CallOption) (*CheckUserResponse, error) {
 	client := user.NewUserClient(m.cli.Conn())
 	return client.CheckUser(ctx, in, opts...)
+}
+
+func (m *defaultUser) UserLogin(ctx context.Context, in *CheckUserRequest, opts ...grpc.CallOption) (*UserResponse, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.UserLogin(ctx, in, opts...)
 }

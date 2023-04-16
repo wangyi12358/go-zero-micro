@@ -3,7 +3,7 @@ package logic
 import (
 	"context"
 	"github.com/zeromicro/go-zero/core/logx"
-	"go-zero-micro/pkg/models/sys_user_model"
+	"go-zero-micro/service/user/model/sys_user_model"
 	"go-zero-micro/service/user/rpc/internal/svc"
 	"go-zero-micro/service/user/rpc/types/user"
 )
