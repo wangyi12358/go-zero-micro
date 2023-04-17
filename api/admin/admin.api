@@ -1,3 +1,5 @@
+import "./user.api"
+
 type (
 	LoginReq {
 		Username string `json:"username"`
@@ -8,7 +10,15 @@ type (
 	}
 )
 
-service admin {
+service Admin {
 	@handler login
-	get /api/login(LoginReq) returns (LoginReply)
+	post /api/login(LoginReq) returns (LoginReply)
+}
+
+@server(
+	jwt: Auth
+)
+service Admin {
+	@handler logout
+	post /api/logout() returns ()
 }

@@ -1,0 +1,11 @@
+message CreateProductReq {
+
+}
+
+message ProductRes {
+
+}
+
+service Product {
+  rpc createProduct(CreateProductReq) returns(ProductRes);
+}

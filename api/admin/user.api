@@ -1,0 +1,12 @@
+type (
+)
+
+@server(
+  jwt: Auth
+)
+service Admin {
+  @handler userList
+  get /api/user()
+  @handler createUser
+  post /api/user
+}

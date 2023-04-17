@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+	"github.com/AlecAivazis/survey/v2"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"os/exec"
+	"strings"
 )
 
 type GenConfig struct {
@@ -47,19 +49,36 @@ func main() {
 			fmt.Printf("err: %s\n", err)
 		}
 	}()
+	services := getServiceOptions()
+	var service string
+	prompt := &survey.Select{
+		Message: "Select service please!",
+		Options: services,
+	}
+	err := survey.AskOne(prompt, &service)
+	if err != nil {
+		panic(fmt.Sprintf("Survey error: %s", err.Error()))
+	}
 
 	genConfig := getGenConfig()
 
-	cmd := exec.Command("gentool",
-		"-dsn", genConfig.Dsn,
-		"-tables", genConfig.Tables,
-		"-db", genConfig.Db,
-		"-outPath", "./pkg/models/gen")
-	_, err := cmd.Output()
+	for _, table := range strings.Split(genConfig.Tables, ",") {
+		tableModel := fmt.Sprintf("%s_model", table)
+		outPath := fmt.Sprintf("./service/%s/model/%s", service, tableModel)
+		fmt.Printf("outPath: %s", outPath)
+		cmd := exec.Command("gentool",
+			"-dsn", genConfig.Dsn,
+			"-tables", table,
+			"-db", genConfig.Db,
+			"-outPath", outPath,
+			"-modelPkgName", tableModel,
+			"-onlyModel")
+		_, err := cmd.Output()
 
-	if err != nil {
-		panic(fmt.Sprintf("Command error: %s", err.Error()))
+		if err != nil {
+			panic(fmt.Sprintf("Command error: %s", err.Error()))
+		}
+
+		fmt.Printf("\033[32m%s\033[0m\n", "Success!")
 	}
-
-	fmt.Printf("\033[32m%s\033[0m\n", "Success!")
 }

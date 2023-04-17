@@ -2,7 +2,7 @@ package models
 
 import (
 	"fmt"
-	"go-zero-micro/pkg/config"
+	"go-zero-micro/common/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
