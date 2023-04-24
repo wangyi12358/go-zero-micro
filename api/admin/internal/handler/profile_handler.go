@@ -7,12 +7,12 @@ import (
 	"net/http"
 )
 
-func logoutHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func profileHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		l := logic.NewLogoutLogic(r.Context(), svcCtx)
-		err := l.Logout()
-		response.Response(w, nil, err) //②
+		l := logic.NewProfileLogic(r.Context(), svcCtx)
+		resp, err := l.Profile()
+		response.Response(w, resp, err) //②
 
 	}
 }

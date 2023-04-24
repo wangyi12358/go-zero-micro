@@ -6,7 +6,8 @@ type (
 		Passwrod string `json:"password"`
 	}
 	LoginReply {
-		Token string `json:"token"`
+		Token  string `json:"token"`
+		Expire int64  `json:"expire"`
 	}
 )
 

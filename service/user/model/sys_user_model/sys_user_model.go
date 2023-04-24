@@ -2,6 +2,7 @@ package sys_user_model
 
 import (
 	"context"
+	"fmt"
 	"go-zero-micro/common/models"
 	"go-zero-micro/service/user/rpc/types/user"
 )
@@ -17,6 +18,14 @@ func OfUserResponse(sysUser *SysUser) *user.UserResponse {
 	}
 }
 
+func OfUserResponses(users []*SysUser) []*user.UserResponse {
+	var list = make([]*user.UserResponse, len(users))
+	for i, u := range users {
+		list[i] = OfUserResponse(u)
+	}
+	return list
+}
+
 func FindOneById(ctx context.Context, id int64) (*SysUser, error) {
 	var u = &SysUser{}
 	err := models.DB.First(u, id).Error
@@ -27,13 +36,32 @@ func FindOneById(ctx context.Context, id int64) (*SysUser, error) {
 }
 
 func FindOneByLogin(username string, password string) (*SysUser, error) {
-	var u *SysUser
+	u := &SysUser{}
 	err := models.DB.Where(&SysUser{
 		Username: username,
 		Password: password,
-	}).Find(u).Error
+	}).First(u).Error
 	if err != nil {
+		fmt.Printf("sql error: %s\n", err.Error())
 		return nil, err
 	}
 	return u, nil
+}
+
+func FindUserPage(in *user.UserPageReq) (res *user.UserPageRes, err error) {
+	var users []*SysUser
+	var total int64
+	offset := in.PageSize * (in.Current - 1)
+	err = models.DB.Offset(int(offset)).Limit(int(in.PageSize)).Find(users).Error
+	if err != nil {
+		return nil, err
+	}
+	err = models.DB.Count(&total).Error
+	if err != nil {
+		return nil, err
+	}
+	return &user.UserPageRes{
+		Total: int32(total),
+		List:  OfUserResponses(users),
+	}, nil
 }

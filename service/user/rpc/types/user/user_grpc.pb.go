@@ -22,6 +22,7 @@ const (
 	User_GetUser_FullMethodName   = "/user.User/getUser"
 	User_CheckUser_FullMethodName = "/user.User/checkUser"
 	User_UserLogin_FullMethodName = "/user.User/userLogin"
+	User_UserPage_FullMethodName  = "/user.User/userPage"
 )
 
 // UserClient is the client API for User service.
@@ -31,6 +32,7 @@ type UserClient interface {
 	GetUser(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	CheckUser(ctx context.Context, in *CheckUserRequest, opts ...grpc.CallOption) (*CheckUserResponse, error)
 	UserLogin(ctx context.Context, in *CheckUserRequest, opts ...grpc.CallOption) (*UserResponse, error)
+	UserPage(ctx context.Context, in *UserPageReq, opts ...grpc.CallOption) (*UserPageRes, error)
 }
 
 type userClient struct {
@@ -68,6 +70,15 @@ func (c *userClient) UserLogin(ctx context.Context, in *CheckUserRequest, opts .
 	return out, nil
 }
 
+func (c *userClient) UserPage(ctx context.Context, in *UserPageReq, opts ...grpc.CallOption) (*UserPageRes, error) {
+	out := new(UserPageRes)
+	err := c.cc.Invoke(ctx, User_UserPage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
@@ -75,6 +86,7 @@ type UserServer interface {
 	GetUser(context.Context, *IdRequest) (*UserResponse, error)
 	CheckUser(context.Context, *CheckUserRequest) (*CheckUserResponse, error)
 	UserLogin(context.Context, *CheckUserRequest) (*UserResponse, error)
+	UserPage(context.Context, *UserPageReq) (*UserPageRes, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -90,6 +102,9 @@ func (UnimplementedUserServer) CheckUser(context.Context, *CheckUserRequest) (*C
 }
 func (UnimplementedUserServer) UserLogin(context.Context, *CheckUserRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserLogin not implemented")
+}
+func (UnimplementedUserServer) UserPage(context.Context, *UserPageReq) (*UserPageRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserPage not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -158,6 +173,24 @@ func _User_UserLogin_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_UserPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserPageReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).UserPage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_UserPage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).UserPage(ctx, req.(*UserPageReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -176,6 +209,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "userLogin",
 			Handler:    _User_UserLogin_Handler,
+		},
+		{
+			MethodName: "userPage",
+			Handler:    _User_UserPage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

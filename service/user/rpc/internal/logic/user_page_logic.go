@@ -10,24 +10,24 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type GetUserLogic struct {
+type UserPageLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewGetUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserLogic {
-	return &GetUserLogic{
+func NewUserPageLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserPageLogic {
+	return &UserPageLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *GetUserLogic) GetUser(in *user.IdRequest) (*user.UserResponse, error) {
-	sysUser, err := sys_user_model.FindOneById(l.ctx, in.Id)
+func (l *UserPageLogic) UserPage(in *user.UserPageReq) (*user.UserPageRes, error) {
+	res, err := sys_user_model.FindUserPage(in)
 	if err != nil {
 		return nil, err
 	}
-	return sys_user_model.OfUserResponse(sysUser), nil
+	return res, nil
 }

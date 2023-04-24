@@ -2,8 +2,10 @@ package logic
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/golang-jwt/jwt/v4"
+	"go-zero-micro/common/errorx"
 	"go-zero-micro/service/user/rpc/types/user"
 	"time"
 
@@ -28,10 +30,13 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginReply, err error) {
-	userRes, _ := l.svcCtx.UserRpc.UserLogin(l.ctx, &user.CheckUserRequest{
+	userRes, err := l.svcCtx.UserRpc.UserLogin(l.ctx, &user.CheckUserRequest{
 		Username: req.Username,
 		Password: req.Passwrod,
 	})
+	if err != nil {
+		return nil, errorx.NewDefaultError("账号密码错误!")
+	}
 	token, err := l.getJwtToken(
 		l.svcCtx.Config.Auth.AccessSecret,
 		time.Now().Unix(),
@@ -43,8 +48,15 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginReply, err err
 		return nil, err
 	}
 	return &types.LoginReply{
-		Token: token,
+		Token:  token,
+		Expire: l.svcCtx.Config.Auth.AccessExpire,
 	}, nil
+}
+
+func GetUserId(ctx context.Context) int64 {
+	jsonUserId := ctx.Value("userId").(json.Number)
+	userId, _ := jsonUserId.Int64()
+	return userId
 }
 
 func (l *LoginLogic) getJwtToken(secretKey string, iat, seconds, userId int64) (string, error) {

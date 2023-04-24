@@ -27,8 +27,19 @@ message CheckUserResponse {
   bool success = 1;
 }
 
+message UserPageReq {
+  int32 current = 1;
+  int32 pageSize = 2;
+}
+
+message UserPageRes {
+  repeated UserResponse list = 1;
+  int32 total = 2;
+}
+
 service User {
   rpc getUser(IdRequest) returns(UserResponse);
   rpc checkUser(CheckUserRequest) returns(CheckUserResponse);
   rpc userLogin(CheckUserRequest) returns(UserResponse);
+  rpc userPage(UserPageReq) returns(UserPageRes);
 }

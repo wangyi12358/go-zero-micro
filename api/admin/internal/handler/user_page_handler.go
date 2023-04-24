@@ -9,16 +9,16 @@ import (
 	"net/http"
 )
 
-func createUserHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func userPageHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.CreateUserReq
+		var req types.UserPageReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.Error(w, err)
 			return
 		}
 
-		l := logic.NewCreateUserLogic(r.Context(), svcCtx)
-		resp, err := l.CreateUser(&req)
+		l := logic.NewUserPageLogic(r.Context(), svcCtx)
+		resp, err := l.UserPage(&req)
 		response.Response(w, resp, err) //②
 
 	}

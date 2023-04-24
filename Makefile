@@ -8,5 +8,5 @@ gen_user_rpc:
 start_user_rpc:
 	go run ./service/user/rpc/user.go -f ./service/user/rpc/etc/user.yaml
 
-start_gateway_api:
-	go run ./service/gateway/api/gateway.go -f ./service/gateway/api/etc/gateway.yaml
+start_admin_api:
+	go run ./api/admin/admin.go -f ./api/admin/etc/admin.yaml

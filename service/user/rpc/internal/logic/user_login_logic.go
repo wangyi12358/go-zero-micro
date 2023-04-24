@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"fmt"
 	"go-zero-micro/service/user/model/sys_user_model"
 
 	"go-zero-micro/service/user/rpc/internal/svc"
@@ -25,10 +26,10 @@ func NewUserLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserLog
 }
 
 func (l *UserLoginLogic) UserLogin(in *user.CheckUserRequest) (*user.UserResponse, error) {
+	fmt.Printf("user login")
 	sysUser, err := sys_user_model.FindOneByLogin(in.Username, in.Password)
-	if err == nil {
+	if err != nil {
 		return nil, err
 	}
-
 	return sys_user_model.OfUserResponse(sysUser), nil
 }

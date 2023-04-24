@@ -1,12 +1,35 @@
 type (
+  UserPageReq {
+    Current int16 `json:"current"`
+    PageSize int16 `json:"pageSize"`
+  }
+  CreateUserReq {
+    Nickname string `json:"nickname"`
+    Gender int32 `json:"gender"`
+    Username string `json:"username"`
+    Passwrod string `json:"password"`
+  }
+  UserPageReply {
+    List []UserReply `json:"list"`
+    Total int32 `json:"total"`
+  }
+
+    // user统一返回
+  UserReply {
+    Id int64 `json:"id"`
+    Nickname string `json:"nickname"`
+    Gender int32 `json:"gender"`
+  }
 )
 
 @server(
   jwt: Auth
 )
 service Admin {
-  @handler userList
-  get /api/user()
+  @handler profile
+  get /api/user/profile () returns (UserReply)
+  @handler userPage
+  get /api/user (UserPageReq) returns (UserPageReply)
   @handler createUser
-  post /api/user
+  post /api/user (CreateUserReq) returns (UserReply)
 }

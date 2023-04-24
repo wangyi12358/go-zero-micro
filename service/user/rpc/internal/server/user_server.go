@@ -36,3 +36,8 @@ func (s *UserServer) UserLogin(ctx context.Context, in *user.CheckUserRequest) (
 	l := logic.NewUserLoginLogic(ctx, s.svcCtx)
 	return l.UserLogin(in)
 }
+
+func (s *UserServer) UserPage(ctx context.Context, in *user.UserPageReq) (*user.UserPageRes, error) {
+	l := logic.NewUserPageLogic(ctx, s.svcCtx)
+	return l.UserPage(in)
+}

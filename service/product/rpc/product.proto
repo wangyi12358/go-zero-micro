@@ -1,11 +1,23 @@
-message CreateProductReq {
+syntax = "proto3";
 
+package product;
+
+option go_package = "./user";
+
+message CreateProductReq {
+  string name = 1;
+  string url = 2;
+  int64 categoryId = 3;
 }
 
 message ProductRes {
-
+  int64 id = 1;
+  string name = 2;
+  string url = 3;
+  int64 categoryId = 4;
 }
 
 service Product {
   rpc createProduct(CreateProductReq) returns(ProductRes);
+  rpc productPage()
 }
