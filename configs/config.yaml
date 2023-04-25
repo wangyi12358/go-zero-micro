@@ -1,8 +1,0 @@
-
-database:
-  type: postgres
-  user: postgres
-  password: wangyi12358
-  host: 127.0.0.1
-  port: 5432
-  name: db_example
