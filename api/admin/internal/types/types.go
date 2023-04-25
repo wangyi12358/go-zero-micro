@@ -11,6 +11,11 @@ type LoginReply struct {
 	Expire int64  `json:"expire"`
 }
 
+type SendMessageReq struct {
+	Topic   string `json:"topic"`
+	Message string `json:"message"`
+}
+
 type UserPageReq struct {
 	Current  int16 `json:"current"`
 	PageSize int16 `json:"pageSize"`

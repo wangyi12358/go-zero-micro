@@ -3,7 +3,7 @@ package consumer
 import (
 	"fmt"
 	"github.com/Shopify/sarama"
-	"go-zero-micro/common/kafka"
+	"go-zero-micro/core/kafka"
 )
 
 type GroupHandler struct {

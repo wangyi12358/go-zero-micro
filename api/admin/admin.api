@@ -9,11 +9,15 @@ type (
 		Token  string `json:"token"`
 		Expire int64  `json:"expire"`
 	}
+	SendMessageReq {
+		Topic   string `json:"topic"`
+		Message string `json:"message"`
+	}
 )
 
 service Admin {
 	@handler login
-	post /api/login(LoginReq) returns (LoginReply)
+	post /api/login (LoginReq) returns (LoginReply)
 }
 
 @server(
@@ -21,5 +25,7 @@ service Admin {
 )
 service Admin {
 	@handler logout
-	post /api/logout() returns ()
+	post /api/logout () returns ()
+	@handler sendMessage
+	post /api/sendMessage (SendMessageReq) returns ()
 }

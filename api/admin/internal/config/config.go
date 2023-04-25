@@ -4,7 +4,7 @@ import (
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/rest"
 	"github.com/zeromicro/go-zero/zrpc"
-	"go-zero-micro/common/kafka"
+	"go-zero-micro/core/kafka"
 )
 
 type Config struct {
