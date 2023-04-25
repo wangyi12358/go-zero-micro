@@ -3,7 +3,7 @@ package sys_user_model
 import (
 	"context"
 	"fmt"
-	"go-zero-micro/common/model"
+	"go-zero-micro/core/model"
 	"go-zero-micro/service/user/rpc/types/user"
 )
 

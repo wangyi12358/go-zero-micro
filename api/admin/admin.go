@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"go-zero-micro/common/errorx"
-	"go-zero-micro/common/kafka"
-	"go-zero-micro/common/redis"
+	"go-zero-micro/core/kafka"
+	"go-zero-micro/core/redis"
 	"net/http"
 
 	"go-zero-micro/api/admin/internal/config"

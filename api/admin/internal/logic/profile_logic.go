@@ -8,7 +8,7 @@ import (
 	"go-zero-micro/api/admin/internal/svc"
 	"go-zero-micro/api/admin/internal/types"
 	"go-zero-micro/common/errorx"
-	"go-zero-micro/common/redis"
+	"go-zero-micro/core/redis"
 	"go-zero-micro/service/user/rpc/types/user"
 
 	"github.com/zeromicro/go-zero/core/logx"

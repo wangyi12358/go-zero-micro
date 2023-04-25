@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"go-zero-micro/common/kafka"
-	"go-zero-micro/common/model"
+	"go-zero-micro/core/kafka"
+	"go-zero-micro/core/model"
 	zeroConfig "go-zero-micro/service/user/rpc/internal/config"
 	"go-zero-micro/service/user/rpc/internal/consumer"
 	"go-zero-micro/service/user/rpc/internal/server"
