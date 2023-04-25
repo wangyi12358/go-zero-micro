@@ -3,10 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
-	"go-zero-micro/common/config"
-	"go-zero-micro/common/models"
-
+	"go-zero-micro/common/kafka"
+	"go-zero-micro/common/model"
 	zeroConfig "go-zero-micro/service/user/rpc/internal/config"
+	"go-zero-micro/service/user/rpc/internal/consumer"
 	"go-zero-micro/service/user/rpc/internal/server"
 	"go-zero-micro/service/user/rpc/internal/svc"
 	"go-zero-micro/service/user/rpc/types/user"
@@ -26,9 +26,9 @@ func main() {
 	var c zeroConfig.Config
 	conf.MustLoad(*configFile, &c)
 	ctx := svc.NewServiceContext(c)
-
-	config.Setup()
-	models.Setup()
+	model.Setup(c.Database)
+	handler := &consumer.GroupHandler{}
+	group := kafka.SetupConsumer(c.Kafka, handler)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
 		user.RegisterUserServer(grpcServer, server.NewUserServer(ctx))
@@ -37,7 +37,10 @@ func main() {
 			reflection.Register(grpcServer)
 		}
 	})
-	defer s.Stop()
+	defer func() {
+		s.Stop()
+		_ = group.Close()
+	}()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	s.Start()

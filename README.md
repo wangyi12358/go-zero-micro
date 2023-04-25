@@ -30,7 +30,7 @@
 ├── api // 对外访问api接口
 ├── Makefile
 ├── README.md
-├── common  // 常用方法等
+├── common  // 常用方法、中间件等等
 ├── configs  // 不同环境的通用配置文件
 │   └── config.dev.yaml
 ├── go.mod

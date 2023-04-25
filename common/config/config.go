@@ -16,7 +16,17 @@ type Database struct {
 	Port     string
 }
 
-var DatabaseConfig = &Database{}
+type Redis struct {
+	Addr     string
+	Password string
+}
+
+type Type struct {
+	Database Database
+	Redis    Redis
+}
+
+var Config = &Type{}
 
 func Setup() {
 	wd, _ := os.Getwd()
@@ -27,8 +37,7 @@ func Setup() {
 	viper.AddConfigPath(configDir)
 	viper.SetConfigType("yaml")
 	err := viper.ReadInConfig()
-
-	if viper.UnmarshalKey("database", DatabaseConfig) != nil {
+	if viper.Unmarshal(Config) != nil {
 		panic(fmt.Errorf("Fatal error config file: %s \n", err))
 	}
 }

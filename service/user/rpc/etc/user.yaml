@@ -4,3 +4,18 @@ Etcd:
   Hosts:
   - 127.0.0.1:2379
   Key: user.rpc
+Database:
+  Type: postgres
+  User: postgres
+  Password: wangyi12358
+  Host: 127.0.0.1
+  Port: 5432
+  Name: db_example
+Kafka:
+  Brokers:
+    - 192.168.1.33:9192
+  ClientId: go-zero-micro-client
+  Consumer:
+    Topics:
+      - test_topic
+    GroupId: go-zero-micro-group
