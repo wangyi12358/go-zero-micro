@@ -36,11 +36,13 @@
 ├── README.md
 ├── common  // 常用方法等
 ├── core    // 常用中间件
-├── configs  // 不同环境的通用配置文件
+├── config  // 会把一些通用配置放在这里
 │   └── config.dev.yaml
 ├── go.mod
 ├── go.sum
 ├── script  // 脚本文件
+│   ├── gen_db_model.go // 通过数据库field生成类型
+│   └── push_etcd_config.go // 把通用配置写到etcd
 ├── service  // 内部服务
 │   ├── product  // 产品服务
 │   │   ├── rpc // 
