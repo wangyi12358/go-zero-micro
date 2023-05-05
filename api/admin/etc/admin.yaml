@@ -6,6 +6,11 @@ UserRpc:
     Hosts:
       - 127.0.0.1:2379
     Key: user.rpc
+ProductRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: product.rpc
 CacheRedis:
   - Host: 192.168.1.33:6379
     Pass: fsdf.ds1.fdf8@5s-00

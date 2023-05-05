@@ -10,6 +10,7 @@ import (
 type Config struct {
 	rest.RestConf
 	UserRpc    zrpc.RpcClientConf
+	ProductRpc zrpc.RpcClientConf
 	CacheRedis cache.CacheConf
 	Auth       struct {
 		AccessSecret string

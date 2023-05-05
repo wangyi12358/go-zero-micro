@@ -1,0 +1,13 @@
+Name: product.rpc
+ListenOn: 0.0.0.0:8080
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: product.rpc
+Database:
+  Type: postgres
+  User: postgres
+  Password: wangyi12358
+  Host: 127.0.0.1
+  Port: 5432
+  Name: db_example

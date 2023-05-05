@@ -3,4 +3,4 @@ dsn : "host=127.0.0.1 user=postgres password=wangyi12358 dbname=db_example port=
 # input mysql or postgres or sqlite or sqlserver. consult[https://gorm.io/docs/connecting_to_the_database.html]
 db  : "postgres"
 # enter the required data table or leave it blank.You can input : orders,users,goods
-tables  : "sys_department"
+tables  : "category,product"

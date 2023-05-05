@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package product;
 
-option go_package = "./user";
+option go_package = "./product";
 
 message CreateProductReq {
   string name = 1;
@@ -17,7 +17,17 @@ message ProductRes {
   int64 categoryId = 4;
 }
 
+message ProductPageReq {
+  int32 current = 1;
+  int32 pageSize = 2;
+}
+
+message ProductPageRes {
+  repeated ProductRes list = 1;
+  int32 total = 2;
+}
+
 service Product {
   rpc createProduct(CreateProductReq) returns(ProductRes);
-  rpc productPage()
+  rpc productPage(ProductPageReq) returns(ProductPageRes);
 }
