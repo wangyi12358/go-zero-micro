@@ -49,6 +49,7 @@
 │   │   │   └── etc // 当前服务配置文件
 │   │   └── model // 数据库操作层
 │   └── user  // user服务
+├── sql  // sql文件
 ├── script  // 脚本文件
 ├── gen.yaml  // 数据库生成配置文件
 └── script  // 脚本文件
