@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"go-zero-micro/core/etcd"
 	"go-zero-micro/core/kafka"
 	"go-zero-micro/core/model"
 	zeroConfig "go-zero-micro/service/user/rpc/internal/config"
@@ -26,9 +27,10 @@ func main() {
 	var c zeroConfig.Config
 	conf.MustLoad(*configFile, &c)
 	ctx := svc.NewServiceContext(c)
-	model.Setup(c.Database)
+	etcd.Setup()
+	model.Setup(etcd.C.Database)
 	handler := &consumer.GroupHandler{}
-	group := kafka.SetupConsumer(c.Kafka, handler)
+	group := kafka.SetupConsumer(etcd.C.Kafka, handler)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
 		user.RegisterUserServer(grpcServer, server.NewUserServer(ctx))
