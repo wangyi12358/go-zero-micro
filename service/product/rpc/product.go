@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"go-zero-micro/core/etcd"
 	"go-zero-micro/core/model"
 
 	"go-zero-micro/service/product/rpc/internal/config"
@@ -25,7 +26,8 @@ func main() {
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 	ctx := svc.NewServiceContext(c)
-	model.Setup(c.Database)
+	etcd.Setup()
+	model.Setup(etcd.C.Database)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
 		product.RegisterProductServer(grpcServer, server.NewProductServer(ctx))
