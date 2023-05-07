@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"go-zero-micro/common/errorx"
+	"go-zero-micro/core/etcd"
 	"go-zero-micro/core/kafka"
 	"go-zero-micro/core/redis"
 	"net/http"
@@ -25,8 +26,9 @@ func main() {
 
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
-	redis.Setup(c.CacheRedis)
-	p := kafka.SetupProducer(c.Kafka)
+	etcd.Setup()
+	redis.Setup(etcd.C.CacheRedis)
+	p := kafka.SetupProducer(etcd.C.Kafka)
 	server := rest.MustNewServer(c.RestConf)
 	defer func() {
 		server.Stop()

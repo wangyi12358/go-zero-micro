@@ -46,7 +46,6 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("get config error: %v", err))
 	}
-	fmt.Println(conf)
 	// Connect to Etcd cluster
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   []string{fmt.Sprintf("http://%s:2379", host)},

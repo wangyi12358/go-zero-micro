@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/zeromicro/go-zero/core/stores/cache"
 	"go-zero-micro/core/kafka"
 	"go-zero-micro/core/model"
 	clientv3 "go.etcd.io/etcd/client/v3"
@@ -12,8 +13,9 @@ import (
 )
 
 type Config struct {
-	Database model.Database
-	Kafka    kafka.Config
+	Database   model.Database
+	Kafka      kafka.Config
+	CacheRedis cache.CacheConf
 }
 
 const ConfigKey = "config"

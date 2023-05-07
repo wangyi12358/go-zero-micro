@@ -23,12 +23,16 @@
 
 ## 3. 项目开发
 
+### 推送配置到Etcd
+* 启动Etcd `etcd`
+* 推送Config `make push_etcd_config`
+
 ### 生成model文件
 * 修改`gen.yaml`配置，用于自动生成model
 * `make gen_db_model` 会自动生成model到对应的服务下面，注意：需要选择服务。
 
-### 生成服务文件
-* 修改
+### 生成api、rpc文件
+* 修改.api or .proto文件.
 * 每个服务下面会有 `gen_xxx_code` 命令，用于生成代码。
 
 ## 4. 项目结构

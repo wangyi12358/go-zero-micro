@@ -13,3 +13,7 @@ Kafka:
     Topics:
       - test_topic
     GroupId: go-zero-micro-group
+CacheRedis:
+  - Host: 192.168.1.33:6379
+    Pass: fsdf.ds1.fdf8@5s-00
+    Type: node
