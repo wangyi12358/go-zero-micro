@@ -23,13 +23,13 @@ const ConfigKey = "config"
 var C Config
 
 func Setup() {
-	host := os.Getenv("ETCD_HOST")
-	if host == "" {
-		host = "localhost"
+	addr := os.Getenv("ETCD_ADDR")
+	if addr == "" {
+		addr = "localhost:2379"
 	}
 	// Connect to Etcd cluster
 	cli, err := clientv3.New(clientv3.Config{
-		Endpoints:   []string{fmt.Sprintf("http://%s:2379", host)},
+		Endpoints:   []string{fmt.Sprintf("http://%s", addr)},
 		DialTimeout: 5 * time.Second,
 	})
 	if err != nil {
