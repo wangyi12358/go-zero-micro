@@ -1,3 +1,4 @@
+export ETCD_ADDR="127.0.0.1:2379"
 
 gen_db_model:
 	go run ./script/gen_db_model.go
