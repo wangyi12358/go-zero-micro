@@ -1,7 +1,6 @@
 package sys_user_model
 
 import (
-	"context"
 	"fmt"
 	"go-zero-micro/core/model"
 	"go-zero-micro/service/user/rpc/types/user"
@@ -26,7 +25,7 @@ func OfUserResponses(users []SysUser) []*user.UserResponse {
 	return list
 }
 
-func FindOneById(ctx context.Context, id int64) (*SysUser, error) {
+func FindOneById(id int64) (*SysUser, error) {
 	var u = &SysUser{}
 	err := model.DB.First(u, id).Error
 	if err != nil {
