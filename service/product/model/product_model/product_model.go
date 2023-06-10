@@ -1,6 +1,21 @@
 package product_model
 
-import "go-zero-micro/core/model"
+import (
+	"go-zero-micro/core/model"
+	"go-zero-micro/service/product/rpc/types/product"
+)
+
+func OfProductResponse(p *Product) *product.ProductRes {
+	if p == nil {
+		return nil
+	}
+	return &product.ProductRes{
+		Id:         p.ID,
+		Name:       p.Name,
+		Url:        p.URL,
+		CategoryId: p.CategoryID,
+	}
+}
 
 func Create(product *Product) error {
 	return model.DB.Create(product).Error

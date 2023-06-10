@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"go-zero-micro/service/product/model/product_model"
 
 	"go-zero-micro/service/product/rpc/internal/svc"
 	"go-zero-micro/service/product/rpc/types/product"
@@ -24,7 +25,14 @@ func NewCreateProductLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cre
 }
 
 func (l *CreateProductLogic) CreateProduct(in *product.CreateProductReq) (*product.ProductRes, error) {
-	// todo: add your logic here and delete this line
-
-	return &product.ProductRes{}, nil
+	p := &product_model.Product{
+		Name:       in.Name,
+		URL:        in.Url,
+		CategoryID: in.CategoryId,
+	}
+	err := product_model.Create(p)
+	if err != nil {
+		return nil, err
+	}
+	return product_model.OfProductResponse(p), nil
 }
