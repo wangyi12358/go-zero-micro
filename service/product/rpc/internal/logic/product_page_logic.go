@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"go-zero-micro/service/product/model/product_model"
 
 	"go-zero-micro/service/product/rpc/internal/svc"
 	"go-zero-micro/service/product/rpc/types/product"
@@ -24,7 +25,9 @@ func NewProductPageLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Produ
 }
 
 func (l *ProductPageLogic) ProductPage(in *product.ProductPageReq) (*product.ProductPageRes, error) {
-	// todo: add your logic here and delete this line
-
-	return &product.ProductPageRes{}, nil
+	res, err := product_model.Page(in)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }
