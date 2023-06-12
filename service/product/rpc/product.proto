@@ -27,7 +27,22 @@ message ProductPageRes {
   int32 total = 2;
 }
 
+message CategoryReq {
+  string name = 1;
+}
+
+message CategoryRes {
+  string name = 1;
+}
+
+message CategoryPageRes {
+  repeated CategoryRes list = 1;
+  int32 total = 2;
+}
+
 service Product {
   rpc createProduct(CreateProductReq) returns(ProductRes);
   rpc productPage(ProductPageReq) returns(ProductPageRes);
+  rpc createCategory(CategoryReq) returns(CategoryRes);
+  rpc categoryPage(ProductPageReq) returns(ProductPageRes);
 }
