@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+
 package user;
 
 // protoc-gen-go 版本大于1.4.0, proto文件需要加上go_package,否则无法生成
@@ -10,12 +12,11 @@ message IdRequest {
 }
 
 message UserResponse {
-  // 用户id
   int64 id = 1;
-  // 用户名称
   string nickname = 2;
-  // 用户性别
   int32 gender = 3;
+  google.protobuf.Timestamp createdAt = 4;
+  google.protobuf.Timestamp updatedAt = 5;
 }
 
 message CheckUserRequest {
