@@ -22,10 +22,12 @@ service Admin {
 
 @server(
 	jwt: Auth
+	group: admin
+	prefix: /api
 )
 service Admin {
 	@handler logout
-	post /api/logout () returns ()
+	post /logout () returns ()
 	@handler sendMessage
-	post /api/sendMessage (SendMessageReq) returns ()
+	post /sendMessage (SendMessageReq) returns ()
 }

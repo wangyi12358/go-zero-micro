@@ -4,6 +4,8 @@ package handler
 import (
 	"net/http"
 
+	admin "go-zero-micro/api/admin/internal/handler/admin"
+	user "go-zero-micro/api/admin/internal/handler/user"
 	"go-zero-micro/api/admin/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -24,36 +26,38 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/logout",
-				Handler: logoutHandler(serverCtx),
+				Path:    "/logout",
+				Handler: admin.LogoutHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/sendMessage",
-				Handler: sendMessageHandler(serverCtx),
+				Path:    "/sendMessage",
+				Handler: admin.SendMessageHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api"),
 	)
 
 	server.AddRoutes(
 		[]rest.Route{
 			{
 				Method:  http.MethodGet,
-				Path:    "/api/user/profile",
-				Handler: profileHandler(serverCtx),
+				Path:    "/profile",
+				Handler: user.ProfileHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/api/user",
-				Handler: userPageHandler(serverCtx),
+				Path:    "/",
+				Handler: user.UserPageHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/user",
-				Handler: createUserHandler(serverCtx),
+				Path:    "/",
+				Handler: user.CreateUserHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/user"),
 	)
 }

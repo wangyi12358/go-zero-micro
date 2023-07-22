@@ -19,8 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Product_CreateProduct_FullMethodName = "/product.Product/createProduct"
-	Product_ProductPage_FullMethodName   = "/product.Product/productPage"
+	Product_CreateProduct_FullMethodName  = "/product.Product/createProduct"
+	Product_ProductPage_FullMethodName    = "/product.Product/productPage"
+	Product_CreateCategory_FullMethodName = "/product.Product/createCategory"
+	Product_CategoryPage_FullMethodName   = "/product.Product/categoryPage"
 )
 
 // ProductClient is the client API for Product service.
@@ -29,6 +31,8 @@ const (
 type ProductClient interface {
 	CreateProduct(ctx context.Context, in *CreateProductReq, opts ...grpc.CallOption) (*ProductRes, error)
 	ProductPage(ctx context.Context, in *ProductPageReq, opts ...grpc.CallOption) (*ProductPageRes, error)
+	CreateCategory(ctx context.Context, in *CategoryReq, opts ...grpc.CallOption) (*CategoryRes, error)
+	CategoryPage(ctx context.Context, in *ProductPageReq, opts ...grpc.CallOption) (*ProductPageRes, error)
 }
 
 type productClient struct {
@@ -57,12 +61,32 @@ func (c *productClient) ProductPage(ctx context.Context, in *ProductPageReq, opt
 	return out, nil
 }
 
+func (c *productClient) CreateCategory(ctx context.Context, in *CategoryReq, opts ...grpc.CallOption) (*CategoryRes, error) {
+	out := new(CategoryRes)
+	err := c.cc.Invoke(ctx, Product_CreateCategory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) CategoryPage(ctx context.Context, in *ProductPageReq, opts ...grpc.CallOption) (*ProductPageRes, error) {
+	out := new(ProductPageRes)
+	err := c.cc.Invoke(ctx, Product_CategoryPage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductServer is the server API for Product service.
 // All implementations must embed UnimplementedProductServer
 // for forward compatibility
 type ProductServer interface {
 	CreateProduct(context.Context, *CreateProductReq) (*ProductRes, error)
 	ProductPage(context.Context, *ProductPageReq) (*ProductPageRes, error)
+	CreateCategory(context.Context, *CategoryReq) (*CategoryRes, error)
+	CategoryPage(context.Context, *ProductPageReq) (*ProductPageRes, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -75,6 +99,12 @@ func (UnimplementedProductServer) CreateProduct(context.Context, *CreateProductR
 }
 func (UnimplementedProductServer) ProductPage(context.Context, *ProductPageReq) (*ProductPageRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProductPage not implemented")
+}
+func (UnimplementedProductServer) CreateCategory(context.Context, *CategoryReq) (*CategoryRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCategory not implemented")
+}
+func (UnimplementedProductServer) CategoryPage(context.Context, *ProductPageReq) (*ProductPageRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CategoryPage not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
@@ -125,6 +155,42 @@ func _Product_ProductPage_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Product_CreateCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CategoryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).CreateCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_CreateCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).CreateCategory(ctx, req.(*CategoryReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_CategoryPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductPageReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).CategoryPage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_CategoryPage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).CategoryPage(ctx, req.(*ProductPageReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Product_ServiceDesc is the grpc.ServiceDesc for Product service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -139,6 +205,14 @@ var Product_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "productPage",
 			Handler:    _Product_ProductPage_Handler,
+		},
+		{
+			MethodName: "createCategory",
+			Handler:    _Product_CreateCategory_Handler,
+		},
+		{
+			MethodName: "categoryPage",
+			Handler:    _Product_CategoryPage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

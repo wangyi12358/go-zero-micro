@@ -24,12 +24,14 @@ type (
 
 @server(
   jwt: Auth
+  group: user
+  prefix: /api/user
 )
 service Admin {
   @handler profile
-  get /api/user/profile () returns (UserReply)
+  get /profile () returns (UserReply)
   @handler userPage
-  get /api/user (UserPageReq) returns (UserPageReply)
+  get / (UserPageReq) returns (UserPageReply)
   @handler createUser
-  post /api/user (CreateUserReq) returns (UserReply)
+  post / (CreateUserReq) returns (UserReply)
 }

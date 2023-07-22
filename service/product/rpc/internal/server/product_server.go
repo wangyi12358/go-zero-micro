@@ -31,3 +31,13 @@ func (s *ProductServer) ProductPage(ctx context.Context, in *product.ProductPage
 	l := logic.NewProductPageLogic(ctx, s.svcCtx)
 	return l.ProductPage(in)
 }
+
+func (s *ProductServer) CreateCategory(ctx context.Context, in *product.CategoryReq) (*product.CategoryRes, error) {
+	l := logic.NewCreateCategoryLogic(ctx, s.svcCtx)
+	return l.CreateCategory(in)
+}
+
+func (s *ProductServer) CategoryPage(ctx context.Context, in *product.ProductPageReq) (*product.ProductPageRes, error) {
+	l := logic.NewCategoryPageLogic(ctx, s.svcCtx)
+	return l.CategoryPage(in)
+}

@@ -32,7 +32,8 @@ message CategoryReq {
 }
 
 message CategoryRes {
-  string name = 1;
+  int64 id = 1;
+  string name = 2;
 }
 
 message CategoryPageRes {
