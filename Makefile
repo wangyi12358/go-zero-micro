@@ -10,4 +10,4 @@ start_admin_api:
 	go run ./api/admin/admin.go -f ./api/admin/etc/admin.yaml
 
 push_etcd_config:
-	go run ./script/push_etcd_config.go 1234
+	go run ./script/push_etcd_config.go 11324
